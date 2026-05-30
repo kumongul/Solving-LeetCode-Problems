@@ -6,8 +6,9 @@ import (
 )
 
 func main() {
-	nums := []int{10, 20, 30}
-	fmt.Println(containsDuplicate(nums))
+	nums := []int{1, 0, 0, 3, 12}
+	moveZeroes(nums)
+	fmt.Println(nums)
 }
 
 // 1
@@ -86,4 +87,19 @@ func validPalindrome(s string) bool {
 	}
 
 	return true
+}
+
+// 5
+func moveZeroes(nums []int) {
+	write := 0
+
+	for read := 0; read < len(nums); read++ {
+		if nums[read] != 0 {
+			nums[write] = nums[read]
+			write++
+		}
+	}
+	for i := write; i < len(nums); i++ {
+		nums[i] = 0
+	}
 }
