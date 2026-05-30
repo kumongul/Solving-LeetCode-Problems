@@ -1,10 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"unicode"
+)
 
 func main() {
-	nums := []int{10, 20, 30}
-	fmt.Println(containsDuplicate(nums))
+	nums := []int{1, 0, 0, 3, 12}
+	moveZeroes(nums)
+	fmt.Println(nums)
 }
 
 // 1
@@ -47,6 +51,9 @@ func isAnagram(s, t string) bool {
 	}
 	for _, ch := range t {
 		m[ch]--
+		if m[ch] < 0 {
+			return false
+		}
 	}
 	for _, v := range m {
 		if v != 0 {
@@ -54,4 +61,45 @@ func isAnagram(s, t string) bool {
 		}
 	}
 	return true
+}
+
+// 4
+func validPalindrome(s string) bool {
+	var clean []rune
+
+	for _, ch := range s {
+		if !unicode.IsLetter(ch) && !unicode.IsDigit(ch) {
+			continue
+		}
+		ch = unicode.ToLower(ch)
+
+		clean = append(clean, ch)
+	}
+
+	left, right := 0, len(clean)-1
+
+	for left < right {
+		if clean[left] != clean[right] {
+			return false
+		}
+		left++
+		right--
+	}
+
+	return true
+}
+
+// 5
+func moveZeroes(nums []int) {
+	write := 0
+
+	for read := 0; read < len(nums); read++ {
+		if nums[read] != 0 {
+			nums[write] = nums[read]
+			write++
+		}
+	}
+	for i := write; i < len(nums); i++ {
+		nums[i] = 0
+	}
 }
