@@ -103,3 +103,62 @@ func moveZeroes(nums []int) {
 		nums[i] = 0
 	}
 }
+
+// 6
+func validParentheses(s string) bool {
+	pairs := map[rune]rune{
+		'(': ')',
+		'[': ']',
+		'{': '}',
+	}
+
+	var stack []rune
+
+	for _, ch := range s {
+
+		// 1. если ОТКРЫВАЮЩАЯ → push
+		if ch == '(' || ch == '[' || ch == '{' {
+			stack = append(stack, ch)
+			continue
+		}
+
+		if ch == ')' || ch == ']' || ch == '}' {
+			if len(stack) == 0 {
+				return false
+			}
+			top := stack[len(stack)-1]
+			if pairs[top] == ch {
+				stack = stack[:len(stack)-1]
+				continue
+			}
+			return false
+		}
+	}
+
+	return len(stack) == 0
+}
+
+// 7
+func maxProfit(prices []int) int {
+	if len(prices) == 0 {
+		return 0
+	}
+
+	minPrice := prices[0]
+	maxProfit := 0
+
+	for i := 1; i < len(prices); i++ {
+
+		if prices[i] < minPrice {
+			minPrice = prices[i]
+		}
+
+		profit := prices[i] - minPrice
+
+		if profit > maxProfit {
+			maxProfit = profit
+		}
+	}
+
+	return maxProfit
+}
